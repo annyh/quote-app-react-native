@@ -20,7 +20,7 @@ export default function HomeScreen() {
 
     return (<ScrollView style={styles.container}>
         <ButtonGroup
-        containerStyle={styles.buttonContainer}
+            containerStyle={styles.buttonContainer}
             onPress={(i) => {
                 setText('')
                 setQueryIndex(i)
@@ -36,12 +36,13 @@ export default function HomeScreen() {
             autoFocus={true}
             onSubmitEditing={() => getUserAsync(getQuery(text))
                 .then(data => setResults(data))}
-        /> 
+        />
         {results.hasOwnProperty('quotes') && results.quotes.map((item, i) => (
             <ListItem
                 key={i}
                 title={item.quote}
                 rightIcon={<AntDesign name="heart" size={24} color="black" />}
+                subtitle={item.author}
                 bottomDivider
             />
         ))
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     input: {
-        height: 40, 
+        height: 40,
         padding: 10,
     },
     buttonContainer: {
