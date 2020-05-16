@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { ListItem } from 'react-native-elements'
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text } from 'react-native';
 import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
+import * as WebBrowser from 'expo-web-browser';
 
 export default function AuthorDetail({ _name }) {
     const [results, setResults] = useState([]);
@@ -21,13 +22,18 @@ export default function AuthorDetail({ _name }) {
     }, [name])
     return (<ScrollView style={styles.container}>
         <Text style={styles.title}>{name}
-            <AntDesign name="heart" size={24} color="black"/>
+            <AntDesign name="hearto" size={24} color="black" />
         </Text>
+        <Button title="Open in Wikipedia" onPress={async () => {
+            const url = 'https://en.wikipedia.org/wiki/' + name.split(' ').join('_')
+            console.log('opening url', url);
+            await WebBrowser.openBrowserAsync(url)
+        }} />
         {results.hasOwnProperty('quotes') && results.quotes.map((item, i) => (
             <ListItem
                 key={i}
                 title={item.quote}
-                rightIcon={<AntDesign name="heart" size={24} color="black" />}
+                rightIcon={<AntDesign name="hearto" size={24} color="black" />}
                 subtitle={item.publication}
                 bottomDivider
             />

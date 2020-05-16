@@ -22,7 +22,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={HomeScreen}
         options={{
           title: 'Search quotes',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-search" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="search1" />,
         }}
       />
       <BottomTab.Screen
@@ -30,7 +30,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={LinksScreen}
         options={{
           title: 'Favorites',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-star" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="heart" />,
         }}
       />
       <BottomTab.Screen
@@ -38,7 +38,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={AuthorScreen}
         options={{
           title: 'Authors',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="user" />,
         }}
       />      
     </BottomTab.Navigator>

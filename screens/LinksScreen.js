@@ -13,7 +13,7 @@ export default function LinksScreen() {
             <ListItem
                 key={i}
                 title={item.quote}
-                rightIcon={<AntDesign name="heart" size={24} color="black" />}
+                rightIcon={<AntDesign name="hearto" size={24} color="black" />}
                 subtitle={item.author}
                 bottomDivider
             />
