@@ -43,9 +43,18 @@ export default function HomeScreen({ navigation }) {
             <ListItem
                 key={i}
                 title={item.quote}
-                rightIcon={<AntDesign name="hearto" size={24} color="black" />}
-                subtitle={queryIndex === 0 ? null : 
-                    <Text style={styles.bold} onPress={() => navigation.navigate('MyModal', { name: item.author })}>{item.author}</Text>}
+                rightIcon={<AntDesign 
+                    onPress={(() => {
+                        console.log('favorite this quote', item.quote, 'by', item.author)
+                    })}
+                    name="hearto" size={24} color="black" />}
+                subtitle={
+                    queryIndex === 0 ? null : <Text
+                        style={styles.bold}
+                        onPress={() => navigation.navigate(
+                            'MyModal', { name: item.author })
+                        }>{item.author}</Text>
+                }
                 bottomDivider
             />
         ))

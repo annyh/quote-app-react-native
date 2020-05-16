@@ -18,7 +18,7 @@ export default class DataStorage {
         }
     };
 
-    readAllData = (filter, prefix) => {
+    readAllData = (prefix) => {
         return new Promise((resolve, reject) => {
             AsyncStorage.getAllKeys((err, keys) => {
                 AsyncStorage.multiGet(keys, (err, result) => {
@@ -29,11 +29,7 @@ export default class DataStorage {
                         if (prefix && key.startsWith(prefix)) {
                             const value = item[1];
                             const todo = JSON.parse(value);
-
-                            if (filter !== undefined && todo.status === filter) {
-                                //based on filter
-                                list.push(todo);
-                            }
+                            list.push(todo);
                         }
                     });
                     resolve(list);
@@ -53,10 +49,7 @@ export default class DataStorage {
                         if (key.startsWith(prefix)) {
                             const value = item[1];
                             const todo = JSON.parse(value);
-
-                            if (todo.status === TODOSTATUS.done) {
-                                archivedList.push(todo.id);
-                            }
+                            archivedList.push(todo.id);
                         }
                     });
                     //remove all done todolist

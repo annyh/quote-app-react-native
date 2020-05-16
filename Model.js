@@ -21,15 +21,8 @@ class Model {
         this.dataStorage.createData(todo.id, todoString);
     };
 
-    readTodoList = (filter, prefix) => {
-        return this.dataStorage.readAllData(filter, prefix); // promise obj return
-    };
-
-    updateTodo = (todo, status) => {
-        todo.status = status;
-        const todoString = JSON.stringify(todo);
-        // replacing original task
-        this.dataStorage.createData(todo.id, todoString);
+    readTodoList = (prefix) => {
+        return this.dataStorage.readAllData(prefix); // promise obj return
     };
 
     deleteArchivedTodoList = (prefix) => {

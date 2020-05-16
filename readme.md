@@ -1,6 +1,5 @@
 TODO
 - add onpress favorites per quote
-- add link to authorScreen
-- add Author Details page
-- change favorites page for quotes
+- load favorite quotes
+- load favorite authors
 - add search icon button to input, onpress submit
