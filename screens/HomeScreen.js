@@ -19,15 +19,13 @@ export default function HomeScreen({ navigation }) {
     }
 
     return (<ScrollView style={styles.container}>
-              <Button
-        onPress={() => navigation.navigate('MyModal')}
-        title="Open Modal"
-      />
+
         <ButtonGroup
             containerStyle={styles.buttonContainer}
             onPress={(i) => {
                 setText('')
                 setQueryIndex(i)
+                setResults([])
             }}
             selectedIndex={queryIndex}
             buttons={queryBy}
@@ -46,7 +44,8 @@ export default function HomeScreen({ navigation }) {
                 key={i}
                 title={item.quote}
                 rightIcon={<AntDesign name="heart" size={24} color="black" />}
-                subtitle={item.author}
+                subtitle={queryIndex === 0 ? null : 
+                    <Text style={styles.bold} onPress={() => navigation.navigate('MyModal', { name: item.author })}>{item.author}</Text>}
                 bottomDivider
             />
         ))
@@ -66,6 +65,10 @@ const styles = StyleSheet.create({
     input: {
         height: 40,
         padding: 10,
+    },
+    bold: {
+        fontWeight: '400',
+        color: 'blue'
     },
     buttonContainer: {
         height: 30,

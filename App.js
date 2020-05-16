@@ -1,19 +1,17 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { Button, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
+import AuthorDetail from './components/AuthorDetail'
 
 const Stack = createStackNavigator();
 
-function ModalScreen({ navigation }) {
+function ModalScreen({ navigation, route }) {
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ fontSize: 30 }}>This is a modal!</Text>
-            <Button onPress={() => navigation.goBack()} title="Dismiss" />
-        </View>
+        <AuthorDetail _name={route.params ? route.params.name : '' }/>
     );
 }
 

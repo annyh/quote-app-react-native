@@ -20,7 +20,7 @@ export default function AuthorDetail({ _name }) {
         .then(data => setResults(data))
     }, [name])
     return (<ScrollView style={styles.container}>
-        <Text style={styles.title}>Author: {name }</Text>
+        <Text style={styles.title}>{name }</Text>
         {results.hasOwnProperty('quotes') && results.quotes.map((item, i) => (
             <ListItem
                 key={i}
@@ -41,7 +41,5 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        paddingLeft: 16,
-        paddingTop: 12,
     },
 });
