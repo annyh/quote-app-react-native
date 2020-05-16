@@ -1,23 +1,35 @@
-import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { ListItem } from 'react-native-elements'
 import * as React from 'react';
+import { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
-import results from '../data/quotes.json';
+import model from '../Model';
 
 export default function LinksScreen() {
+    const [allData, setData] = useState([]);
+    const prefix = '@author/'
+    useEffect(() => {
+        model.readTodoList(prefix).then((list) => {
+            const sortedList = list.sort((a, b) => {
+                return a.created < b.created;
+            });
+            setData(sortedList);
+            console.log('data is', sortedList)
+        });
+    }, [])    
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        {results && results.map((item, i) => (
-            <ListItem
-                key={i}
-                title={item.quote}
-                rightIcon={<AntDesign name="hearto" size={24} color="black" />}
-                subtitle={item.author}
-                bottomDivider
-            />
-        ))
+        {allData && allData.map((item, i) => {
+            return item.quotes.map((quote) => (
+                <ListItem
+                    key={i}
+                    title={quote}
+                    rightIcon={<AntDesign name="heart" size={24} color="black" />}
+                    subtitle={item.id}
+                    bottomDivider
+                />
+            ))})
         }</ScrollView>
   );
 }

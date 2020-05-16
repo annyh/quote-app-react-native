@@ -6,7 +6,6 @@
 */
 
 import { AsyncStorage } from 'react-native';
-import { TODOSTATUS } from './Settings';
 
 export default class DataStorage {
     createData = async (id, dataString) => {

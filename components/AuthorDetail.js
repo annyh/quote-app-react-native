@@ -33,7 +33,6 @@ export default function AuthorDetail({ _name }) {
         </View>
         <Button title="Open in Wikipedia" onPress={async () => {
             const url = 'https://en.wikipedia.org/wiki/' + name.trim().split(' ').join('_')
-            console.log('opening url', url);
             await WebBrowser.openBrowserAsync(url)
         }} />
         {results.hasOwnProperty('quotes') && results.quotes.map((item, i) => (
