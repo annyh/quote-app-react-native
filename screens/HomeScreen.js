@@ -1,12 +1,13 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
+import { ButtonGroup } from 'react-native-elements'
 import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useEffect, useState } from 'react'
 
 export default function HomeScreen() {
     const [text, setText] = useState('');
-    const queryBy = ['author', 'tag','title'];
-    const [queryFor, setQueryFor] = useState(queryBy[0]);
+    const queryBy = ['author', 'tag', 'title'];
+    const [queryIndex, setQueryIndex] = useState(0);
     const [results, setResults] = useState([]);
     async function getUserAsync(query) {
         let response = await fetch(query);
@@ -14,15 +15,21 @@ export default function HomeScreen() {
         return data;
     }
     const getQuery = () => {
-        return 'https://goodquotesapi.herokuapp.com/' + queryFor + '/' + text.split(' ').join('+')
+        return 'https://goodquotesapi.herokuapp.com/' + queryBy[queryIndex] + '/' + text.split(' ').join('+')
     }
 
     return (
         <View style={styles.container}>
             <View style={{ padding: 10 }}>
+                <ButtonGroup
+                    onPress={(i) => setQueryIndex(i)}
+                    selectedIndex={queryIndex}
+                    buttons={queryBy}
+                    containerStyle={{ height: 100 }}
+                />
                 <TextInput
                     style={{ height: 40 }}
-                    placeholder={"Find quotes by " + queryFor}
+                    placeholder={"Find quotes by " + queryBy[queryIndex]}
                     onChangeText={text => setText(text)}
                     defaultValue={text}
                     autoFocus={true}
@@ -34,7 +41,7 @@ export default function HomeScreen() {
                 </Text>
                 <Text style={{ padding: 10, fontSize: 12 }}>
                     {JSON.stringify(results.quotes)}
-                </Text>                
+                </Text>
             </View>
         </View>
     );
@@ -42,7 +49,7 @@ export default function HomeScreen() {
 
 HomeScreen.navigationOptions = {
     header: null,
-};  
+};
 
 function handleHelpPress() {
     WebBrowser.openBrowserAsync(
