@@ -1,8 +1,8 @@
-import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { ButtonGroup } from 'react-native-elements'
-import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ButtonGroup, ListItem } from 'react-native-elements'
+import { FlatList, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useEffect, useState } from 'react'
+import { AntDesign } from '@expo/vector-icons';
 
 export default function HomeScreen() {
     const [text, setText] = useState('');
@@ -18,32 +18,37 @@ export default function HomeScreen() {
         return 'https://goodquotesapi.herokuapp.com/' + queryBy[queryIndex] + '/' + text.split(' ').join('+')
     }
 
-    return (
-        <View style={styles.container}>
-            <View style={{ padding: 10 }}>
-                <ButtonGroup
-                    onPress={(i) => setQueryIndex(i)}
-                    selectedIndex={queryIndex}
-                    buttons={queryBy}
-                    containerStyle={{ height: 100 }}
-                />
-                <TextInput
-                    style={{ height: 40 }}
-                    placeholder={"Find quotes by " + queryBy[queryIndex]}
-                    onChangeText={text => setText(text)}
-                    defaultValue={text}
-                    autoFocus={true}
-                    onSubmitEditing={() => getUserAsync(getQuery(text))
-                        .then(data => setResults(data))}
-                />
-                <Text style={{ padding: 10, fontSize: 42 }}>
-                    {getQuery(text)}
-                </Text>
-                <Text style={{ padding: 10, fontSize: 12 }}>
-                    {JSON.stringify(results.quotes)}
-                </Text>
-            </View>
-        </View>
+    return (<ScrollView style={{ backgroundColor: "white", flex: 1 }}>
+        <ButtonGroup
+            onPress={(i) => {
+                setText('')
+                setQueryIndex(i)
+            }}
+            selectedIndex={queryIndex}
+            buttons={queryBy}
+            containerStyle={{ height: 100 }}
+        />
+        <TextInput
+            style={{ height: 40 }}
+            placeholder={"Find quotes by " + queryBy[queryIndex]}
+            onChangeText={text => setText(text)}
+            defaultValue={text}
+            autoFocus={true}
+            onSubmitEditing={() => getUserAsync(getQuery(text))
+                .then(data => setResults(data))}
+        />
+        <Text style={{ padding: 10, fontSize: 42 }}>
+            {getQuery(text)}
+        </Text>
+        {results.hasOwnProperty('quotes') && results.quotes.map((item, i) => (
+            <ListItem
+                key={i}
+                title={item.quote}
+                rightIcon={<AntDesign name="heart" size={24} color="black" />}
+                bottomDivider
+            />
+        ))
+        }</ScrollView>
     );
 }
 
@@ -51,16 +56,18 @@ HomeScreen.navigationOptions = {
     header: null,
 };
 
-function handleHelpPress() {
-    WebBrowser.openBrowserAsync(
-        'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
-    );
-}
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+    },
+    item: {
+        padding: 4,
+        marginVertical: 4,
+        marginHorizontal: 4,
+    },
+    title: {
+        fontSize: 16,
     },
     developmentModeText: {
         marginBottom: 20,
