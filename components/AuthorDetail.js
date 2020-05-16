@@ -6,7 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 export default function AuthorDetail({ _name }) {
     const [results, setResults] = useState([]);
-    const name = _name  || 'mark twain';
+    const name = _name || 'mark twain';
     async function getUserAsync(query) {
         let response = await fetch(query);
         let data = await response.json()
@@ -17,10 +17,12 @@ export default function AuthorDetail({ _name }) {
     }
     useEffect(() => {
         getUserAsync(getQuery())
-        .then(data => setResults(data))
+            .then(data => setResults(data))
     }, [name])
     return (<ScrollView style={styles.container}>
-        <Text style={styles.title}>{name }</Text>
+        <Text style={styles.title}>{name}
+            <AntDesign name="heart" size={24} color="black"/>
+        </Text>
         {results.hasOwnProperty('quotes') && results.quotes.map((item, i) => (
             <ListItem
                 key={i}
