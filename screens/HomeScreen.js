@@ -39,25 +39,28 @@ export default function HomeScreen({ navigation }) {
             onSubmitEditing={() => getUserAsync(getQuery(text))
                 .then(data => setResults(data))}
         />
-        {results.hasOwnProperty('quotes') && results.quotes.map((item, i) => (
+        {results.hasOwnProperty('quotes') && results.quotes.map((item, i) => {
+            let authorName = item.author.trim();
+            if (authorName.endsWith(',')) authorName = authorName.substr(0, authorName.length-1);
+            return (
             <ListItem
                 key={i}
                 title={item.quote}
                 rightIcon={<AntDesign 
                     onPress={(() => {
-                        console.log('favorite this quote', item.quote, 'by', item.author)
+                        console.log('favorite this quote', item.quote, 'by', authorName)
                     })}
                     name="hearto" size={24} color="black" />}
                 subtitle={
                     queryIndex === 0 ? null : <Text
                         style={styles.bold}
                         onPress={() => navigation.navigate(
-                            'MyModal', { name: item.author })
-                        }>{item.author}</Text>
+                            'MyModal', { name: authorName })
+                        }>{authorName}</Text>
                 }
                 bottomDivider
             />
-        ))
+        )})
         }</ScrollView>
     );
 }

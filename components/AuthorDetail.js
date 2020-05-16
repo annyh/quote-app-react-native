@@ -22,10 +22,16 @@ export default function AuthorDetail({ _name }) {
     }, [name])
     return (<ScrollView style={styles.container}>
         <Text style={styles.title}>{name}
-            <AntDesign name="hearto" size={24} color="black" />
+            <AntDesign
+                onPress={(() => {
+                    console.log('favorite this author', name)
+                })}
+                name="hearto"
+                size={24}
+                color="black" />
         </Text>
         <Button title="Open in Wikipedia" onPress={async () => {
-            const url = 'https://en.wikipedia.org/wiki/' + name.split(' ').join('_')
+            const url = 'https://en.wikipedia.org/wiki/' + name.trim().split(' ').join('_')
             console.log('opening url', url);
             await WebBrowser.openBrowserAsync(url)
         }} />
@@ -33,6 +39,9 @@ export default function AuthorDetail({ _name }) {
             <ListItem
                 key={i}
                 title={item.quote}
+                onPress={(() => {
+                    console.log('favorite:', item.quote, 'by', name)
+                })}
                 rightIcon={<AntDesign name="hearto" size={24} color="black" />}
                 subtitle={item.publication}
                 bottomDivider
