@@ -16,26 +16,24 @@ export default function HomeScreen() {
     const getQuery = () => {
         return 'https://goodquotesapi.herokuapp.com/' + queryFor + '/' + text.split(' ').join('+')
     }
-    useEffect(() => {
-        getUserAsync(getQuery(text))
-        .then(data => setResults(data));
-    }, [text]);
 
     return (
         <View style={styles.container}>
             <View style={{ padding: 10 }}>
                 <TextInput
                     style={{ height: 40 }}
-                    placeholder="Type here to translate!"
+                    placeholder={"Find quotes by " + queryFor}
                     onChangeText={text => setText(text)}
                     defaultValue={text}
                     autoFocus={true}
+                    onSubmitEditing={() => getUserAsync(getQuery(text))
+                        .then(data => setResults(data))}
                 />
                 <Text style={{ padding: 10, fontSize: 42 }}>
                     {getQuery(text)}
                 </Text>
-                <Text style={{ padding: 10, fontSize: 42 }}>
-                    {JSON.stringify(results)}
+                <Text style={{ padding: 10, fontSize: 12 }}>
+                    {JSON.stringify(results.quotes)}
                 </Text>                
             </View>
         </View>
