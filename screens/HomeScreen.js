@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { ButtonGroup, ListItem, withTheme } from 'react-native-elements'
-import { FlatList, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
     const [text, setText] = useState('');
     const queryBy = ['author', 'tag', 'title'];
     const [queryIndex, setQueryIndex] = useState(0);
@@ -19,6 +19,10 @@ export default function HomeScreen() {
     }
 
     return (<ScrollView style={styles.container}>
+              <Button
+        onPress={() => navigation.navigate('MyModal')}
+        title="Open Modal"
+      />
         <ButtonGroup
             containerStyle={styles.buttonContainer}
             onPress={(i) => {
