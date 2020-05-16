@@ -1,6 +1,5 @@
 TODO
-D - on change category button, clear the text
+- if queryFor is not author, show author in result with link 
 - add search icon button to input, onpress submit
 - add favorites icon per row
 - add favorites page for quotes
-- styling: style the button row, and remove unused styles

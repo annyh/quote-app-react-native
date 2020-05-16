@@ -41,7 +41,7 @@ function getHeaderTitle(route) {
 
   switch (routeName) {
     case 'Home':
-      return 'Find books by authors/tag/book';
+      return 'Find quotes by author or tag or book';
     case 'Links':
       return 'Favorite quotes';
   }
