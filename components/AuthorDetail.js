@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ListItem } from 'react-native-elements'
-import { Button, ScrollView, StyleSheet, Text } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
@@ -21,15 +21,16 @@ export default function AuthorDetail({ _name }) {
             .then(data => setResults(data))
     }, [name])
     return (<ScrollView style={styles.container}>
-        <Text style={styles.title}>{name}
+        <View style={styles.textContainer}>
+            <Text style={styles.title}>{name}</Text>
             <AntDesign
-                onPress={(() => {
-                    console.log('favorite this author', name)
-                })}
-                name="hearto"
-                size={24}
-                color="black" />
-        </Text>
+                    onPress={(() => {
+                        console.log('favorite this author', name)
+                    })}
+                    name="hearto"
+                    size={32}
+                    color="black" />
+        </View>
         <Button title="Open in Wikipedia" onPress={async () => {
             const url = 'https://en.wikipedia.org/wiki/' + name.trim().split(' ').join('_')
             console.log('opening url', url);
@@ -56,7 +57,16 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
     },
+    textContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingTop: 12,
+        paddingBottom: 12,
+        marginLeft: 12,
+        marginRight: 12,
+    },
     title: {
-        fontSize: 24,
+        fontSize: 32,
     },
 });
