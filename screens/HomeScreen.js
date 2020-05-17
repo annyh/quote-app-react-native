@@ -2,9 +2,10 @@ import * as React from 'react';
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useEffect, useState } from 'react'
-import { AntDesign, createIconSetFromIcoMoon } from '@expo/vector-icons';
-import { processResults, getAuthorFromId } from '../utils';
+import { AntDesign } from '@expo/vector-icons';
+import { processResults } from '../utils';
 import values from '../data/values.json';
+import FaveIcon from '../components/FaveIcon';
 
 export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
     const [text, setText] = useState('');
@@ -79,20 +80,14 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
                 <ListItem
                     key={i}
                     title={item.quote}
-                    rightIcon={<AntDesign
-                        onPress={(() => {
-                            if (item.isFavorite) {
-                                // unfavorite
-                                onDelete(authorName, item.quote)
-                            } else {
-                                console.log('favorite this quote', item.quote, 'by', authorName)
-                                // find the item in result, change result
-                                results.quotes[i].isFavorite = true;
-                                setResults({...results});                                
-                                onAdd(authorName, item.quote);
-                            }
-                        })}
-                        name={item.isFavorite ? 'heart' : "hearto"} size={24} color="black" />}
+                    rightIcon={<FaveIcon
+                        item={item}
+                        name={authorName}
+                        index={i}
+                        results={results}
+                        setResults={setResults}
+                        onAdd={onAdd}
+                    />}
                     subtitle={<Text
                         style={styles.bold}
                         onPress={() => navigation.navigate(
