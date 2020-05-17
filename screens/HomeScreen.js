@@ -5,17 +5,19 @@ import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { processResults } from '../utils';
 import values from '../data/values.json';
+import { Dimensions } from "react-native";
 
 export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
     const [text, setText] = useState('');
     const queryBy = ['author', 'tag', 'title'];
-    const [queryIndex, setQueryIndex] = useState(0);
+    const [queryIndex, setQueryIndex] = useState(1);
     const [results, setResults] = useState([]);
     async function getUserAsync(query) {
         let response = await fetch(query);
         let data = await response.json()
         return data;
     }
+    const fullWidth = Dimensions.get('window').width;
     const getQuery = () => {
         return 'https://goodquotesapi.herokuapp.com/' + queryBy[queryIndex] + '/' + text.split(' ').join('+')
     }
@@ -43,30 +45,33 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
             selectedIndex={queryIndex}
             buttons={queryBy}
         />
-        {queryIndex === 1 && <Button
-            title='Get random tag'
-            onPress={() => {
-                const rand = Math.floor(Math.random() * 100);
-                setText(values[rand]);
-            }} />}
-        <TextInput
-            style={styles.input}
-            placeholder={"Find quotes by " + queryBy[queryIndex]}
-            onChangeText={text => setText(text)}
-            defaultValue={text}
-            autoFocus={true}
-            onSubmitEditing={() => getQuotes()}
-        />
-        <Button
-            icon={
-                <AntDesign
-                    name="search1"
-                    size={24}
-                    color="white"
-                />
-            }
-            onPress={() => getQuotes()}
-        />
+        <View style={{ flex: 1, flexDirection: "row", justifyContent: 'space-between' }}>
+            {queryBy[queryIndex] === 'tag' && <Button
+                title='Get random tag'
+                onPress={() => {
+                    const rand = Math.floor(Math.random() * 100);
+                    setText(values[rand]);
+                }} />}
+            <TextInput
+                style={styles.input}
+                placeholder={"Find quotes by " + queryBy[queryIndex]}
+                onChangeText={text => setText(text)}
+                defaultValue={text}
+                autoFocus={true}
+                onSubmitEditing={() => getQuotes()}
+            />
+            <Button
+                containerStyle={{ width: 80 }}
+                icon={
+                    <AntDesign
+                        name="search1"
+                        size={24}
+                        color="white"
+                    />
+                }
+                onPress={() => getQuotes()}
+            />
+        </View>
         {results && results.hasOwnProperty('quotes') && results.quotes.map((item, i) => {
             let authorName = item.author.trim();
             if (authorName.endsWith(',')) authorName = authorName.substr(0, authorName.length - 1);
