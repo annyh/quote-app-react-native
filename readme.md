@@ -1,6 +1,3 @@
-TODO
-- add search icon button to input, onpress submit
-
 knonwn bugs
 - on home page, when favorite a quote, it doesn't update to favorited right away
 

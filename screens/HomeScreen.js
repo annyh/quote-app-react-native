@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { ButtonGroup, ListItem } from 'react-native-elements'
-import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, ButtonGroup, ListItem } from 'react-native-elements'
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import values from '../data/values.json';
@@ -64,6 +64,17 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
             defaultValue={text}
             autoFocus={true}
             onSubmitEditing={() => getUserAsync(getQuery(text))
+                .then(data => setResults(processResults(data)))}
+        />
+        <Button
+            icon={
+                <AntDesign
+                    name="search1"
+                    size={24}
+                    color="white"
+                />
+            }
+            onPress={() => getUserAsync(getQuery(text))
                 .then(data => setResults(processResults(data)))}
         />
         {results && results.hasOwnProperty('quotes') && results.quotes.map((item, i) => {
