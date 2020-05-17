@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 
-export default function AuthorDetail({ _name }) {
+export default function AuthorDetail({ _name, allData }) {
     const [results, setResults] = useState([]);
     const name = _name || 'mark twain';
     async function getUserAsync(query) {
@@ -19,7 +19,9 @@ export default function AuthorDetail({ _name }) {
     useEffect(() => {
         getUserAsync(getQuery())
             .then(data => setResults(data))
-    }, [name])
+    }, [name]);
+    
+    console.log('in Author detail', allData.length);
     return (<ScrollView style={styles.container}>
         <View style={styles.textContainer}>
             <Text style={styles.title}>{name}</Text>
