@@ -23,11 +23,11 @@ export default function BottomTabNavigator({ navigation, route, allData, bool, n
             </BottomTab.Screen>
             <BottomTab.Screen
                 name="Links">
-                {props => <LinksScreen {...props} allData={allData} />}
+                {props => <LinksScreen {...props} allData={allData} bool={bool} needsRenderAgain={needsRenderAgain} />}
                     </BottomTab.Screen>
             <BottomTab.Screen
                 name="Authors">
-                {props => <AuthorScreen {...props} allData={allData} />}
+                {props => <AuthorScreen {...props} allData={allData} bool={bool} needsRenderAgain={needsRenderAgain} />}
                 </BottomTab.Screen>
         </BottomTab.Navigator>
     );

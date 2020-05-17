@@ -38,29 +38,28 @@ export default class DataStorage {
     };
 
     deleteAllArchivedTodoList = (prefix) => {
-        console.log('in delete with prefix', prefix)
-        // return new Promise((resolve, reject) => {
-        //     AsyncStorage.getAllKeys((err, keys) => {
-        //         AsyncStorage.multiGet(keys, (err, result) => {
-        //             let archivedList = [];
+        return new Promise((resolve, reject) => {
+            AsyncStorage.getAllKeys((err, keys) => {
+                AsyncStorage.multiGet(keys, (err, result) => {
+                    let archivedList = [];
 
-        //             result.map((item) => {
-        //                 const key = item[0];
-        //                 if (key.startsWith(prefix)) {
-        //                     const value = item[1];
-        //                     const todo = JSON.parse(value);
-        //                     archivedList.push(todo.id);
-        //                 }
-        //             });
-        //             //remove all done todolist
-        //             AsyncStorage.multiRemove(archivedList, (err) => {
-        //                 if (err) {
-        //                     reject(err);
-        //                 }
-        //                 resolve("done");
-        //             });
-        //         });
-        //     });
-        // });
+                    result.map((item) => {
+                        const key = item[0];
+                        if (key.startsWith(prefix)) {
+                            const value = item[1];
+                            const todo = JSON.parse(value);
+                            archivedList.push(todo.id);
+                        }
+                    });
+                    //remove all done todolist
+                    AsyncStorage.multiRemove(archivedList, (err) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve("done");
+                    });
+                });
+            });
+        });
     };
 }

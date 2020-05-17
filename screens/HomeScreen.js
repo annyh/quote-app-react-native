@@ -20,7 +20,7 @@ export default function HomeScreen({ navigation, allData, bool, needsRenderAgain
         return 'https://goodquotesapi.herokuapp.com/' + queryBy[queryIndex] + '/' + text.split(' ').join('+')
     }
 
-    const onTodoAdd = async (authorName, quote) => {
+    const onAdd = async (authorName, quote) => {
         // is the quote belong to a favorite author?
         const authors = allData.filter((obj) => obj.id.includes(authorName));
         console.log('authorName', authorName)
@@ -80,7 +80,7 @@ export default function HomeScreen({ navigation, allData, bool, needsRenderAgain
                     rightIcon={<AntDesign
                         onPress={(() => {
                             console.log('favorite this quote', item.quote, 'by', authorName)
-                            onTodoAdd(authorName, item.quote);
+                            onAdd(authorName, item.quote);
                         })}
                         name="hearto" size={24} color="black" />}
                     subtitle={
