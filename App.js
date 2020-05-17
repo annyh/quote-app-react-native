@@ -19,6 +19,7 @@ function ModalScreen({ navigation, route, allData }) {
 
 export default function App() {
     const [allData, setData] = useState([]);
+    const [bool, needsRenderAgain] = useState(false);
     const prefix = '@author/'
 
     useEffect(() => {
@@ -29,7 +30,7 @@ export default function App() {
             setData(sortedList);
             console.log('data is', sortedList)
         });
-    }, [])
+    }, [bool])
     const isLoadingComplete = useCachedResources();
 
     if (!isLoadingComplete) {
@@ -40,7 +41,7 @@ export default function App() {
                 <NavigationContainer>
                     <Stack.Navigator>
                         <Stack.Screen name="Tabs">
-                            {props => <BottomTabNavigator {...props} allData={allData} />}
+                            {props => <BottomTabNavigator {...props} allData={allData} bool={bool} needsRenderAgain={needsRenderAgain} />}
                         </Stack.Screen>
                         <Stack.Screen name="MyModal">
                             {props => <ModalScreen {...props} allData={allData} />}
