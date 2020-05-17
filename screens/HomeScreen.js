@@ -3,9 +3,8 @@ import { ButtonGroup, ListItem, withTheme } from 'react-native-elements'
 import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
-import model from '../Model';
 
-export default function HomeScreen({ navigation, allData, bool, needsRenderAgain, showToast }) {
+export default function HomeScreen({ navigation, allData, bool, needsRenderAgain, showToast, onAdd }) {
     const [text, setText] = useState('');
     const queryBy = ['author', 'tag', 'title'];
     const [queryIndex, setQueryIndex] = useState(0);
@@ -19,36 +18,6 @@ export default function HomeScreen({ navigation, allData, bool, needsRenderAgain
     const getQuery = () => {
         return 'https://goodquotesapi.herokuapp.com/' + queryBy[queryIndex] + '/' + text.split(' ').join('+')
     }
-
-    const onAdd = async (authorName, quote) => {
-        // is the quote belong to a favorite author?
-        const authors = allData.filter((obj) => obj.id.includes(authorName));
-        if (authors.length) {
-            // add new quote to existing author
-            if (!authors[0].quotes.includes(quote)) {
-                const todoItem = authors[0];
-                authors[0].quotes = [...authors[0].quotes, quote]
-                todoItem.updated = Date.now();
-                // change results
-                console.log('adding', todoItem)
-                await model.createTodo(todoItem);
-                needsRenderAgain(!bool);
-            }
-        } else {
-            // quote author is new
-            const todoItem = {
-                id: prefix + authorName,
-                quotes: [quote],
-                created: Date.now(),
-            }
-            // change results
-            console.log('adding', todoItem)
-            await model.createTodo(todoItem);
-            needsRenderAgain(!bool);
-        }
-
-        showToast('Favorited quote: ' + quote.substr(0, 50) + ' ...');
-    };
 
     return (<ScrollView style={styles.container}>
 

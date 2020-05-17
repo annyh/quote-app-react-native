@@ -38,7 +38,7 @@ export default function LinksScreen({ navigation, allData, bool, needsRenderAgai
                 const authorName = getTitleFromId(item.id, prefix);
                 return item.quotes.map((quote) => (
                     <ListItem
-                        key={i}
+                        key={quote}
                         title={quote}
                         rightIcon={<AntDesign
                             onPress={(() => {
