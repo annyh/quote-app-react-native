@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { processResults } from '../utils';
 import values from '../data/values.json';
-import { Dimensions } from "react-native";
 
 export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
     const [text, setText] = useState('');
@@ -17,7 +16,6 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
         let data = await response.json()
         return data;
     }
-    const fullWidth = Dimensions.get('window').width;
     const getQuery = () => {
         return 'https://goodquotesapi.herokuapp.com/' + queryBy[queryIndex] + '/' + text.split(' ').join('+')
     }
@@ -45,9 +43,9 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
             selectedIndex={queryIndex}
             buttons={queryBy}
         />
-        <View style={{ flex: 1, flexDirection: "row", justifyContent: 'space-between' }}>
+        <View style={styles.inputContainer}>
             {queryBy[queryIndex] === 'tag' && <Button
-                containerStyle={{ width: 140 }}
+                buttonStyle={styles.randomButtonStyle}
                 title='Get random tag'
                 onPress={() => {
                     const rand = Math.floor(Math.random() * 100);
@@ -62,7 +60,8 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
                 onSubmitEditing={() => getQuotes()}
             />
             <Button
-                containerStyle={{ width: 80 }}
+                containerStyle={styles.container}
+                buttonStyle={{ borderTopRightRadius: 8, borderBottomRightRadius: 8 }}
                 icon={
                     <AntDesign
                         name="search1"
@@ -113,11 +112,26 @@ HomeScreen.navigationOptions = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+    },
+    randomButtonStyle: {
+        flex: 1,
+        borderTopLeftRadius: 8,
+        borderBottomLeftRadius: 8,
     },
     input: {
-        height: 40,
-        padding: 10,
+        flex: 2,
+        borderTopLeftRadius: 8,
+        borderBottomLeftRadius: 8,
+        paddingLeft: 8,
+        backgroundColor: 'white',
+    },
+    inputContainer: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        borderRadius: 30,
+        marginLeft: 10,
+        marginRight: 10,
     },
     bold: {
         fontWeight: '400',
