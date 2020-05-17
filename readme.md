@@ -1,9 +1,6 @@
 TODO
-- sanitize the author and quote before saving them
-- on search: are any of the results already favorited? combine the search results with the existing authors
-- add onpress favorites per quote
-- load favorite quotes
-- load favorite authors
+- on author details page: show favorite quotes from them
+- put back the bottom tab icons 
 - add search icon button to input, onpress submit
 
 assumption: 

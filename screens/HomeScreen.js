@@ -4,7 +4,7 @@ import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View
 import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 
-export default function HomeScreen({ navigation, onAdd }) {
+export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
     const [text, setText] = useState('');
     const queryBy = ['author', 'tag', 'title'];
     const [queryIndex, setQueryIndex] = useState(0);
@@ -18,9 +18,30 @@ export default function HomeScreen({ navigation, onAdd }) {
     const getQuery = () => {
         return 'https://goodquotesapi.herokuapp.com/' + queryBy[queryIndex] + '/' + text.split(' ').join('+')
     }
+    const processResults = (obj) => {
+        if (!obj.hasOwnProperty('quotes')) {
+            return;
+        }
+
+        // get all quotes
+        const favoriteQuotes = allData.reduce((acc, curr) => {
+            acc = [...acc, ...curr.quotes]; return acc;
+        }, []);
+        obj.quotes.forEach((obj) => {
+            obj.isFavorite = favoriteQuotes.includes(obj.quote);
+        });
+        // console.log('obj', obj.quotes)
+        return obj;
+    }
+
+    useEffect(() => {
+        if (results && results.hasOwnProperty('quotes')) {
+            const obj = processResults(results);
+            setResults(obj);
+        }
+    }, [allData]);
 
     return (<ScrollView style={styles.container}>
-
         <ButtonGroup
             containerStyle={styles.buttonContainer}
             onPress={(i) => {
@@ -38,27 +59,32 @@ export default function HomeScreen({ navigation, onAdd }) {
             defaultValue={text}
             autoFocus={true}
             onSubmitEditing={() => getUserAsync(getQuery(text))
-                .then(data => setResults(data))}
+                .then(data => setResults(processResults(data)))}
         />
-        {results.hasOwnProperty('quotes') && results.quotes.map((item, i) => {
+        {results && results.hasOwnProperty('quotes') && results.quotes.map((item, i) => {
             let authorName = item.author.trim();
             if (authorName.endsWith(',')) authorName = authorName.substr(0, authorName.length - 1);
+            if (item.isFavorite) console.log('favorite', item.quote)
             return (
                 <ListItem
                     key={i}
-                    title={item.quote}
+                    title={item.quote + ' ' + item.isFavorite}
                     rightIcon={<AntDesign
                         onPress={(() => {
-                            console.log('favorite this quote', item.quote, 'by', authorName)
-                            onAdd(authorName, item.quote);
+                            if (item.isFavorite) {
+                                // unfavorite
+                                onDelete(authorName, item.quote)
+                            } else {
+                                console.log('favorite this quote', item.quote, 'by', authorName)
+                                onAdd(authorName, item.quote);
+                            }
                         })}
-                        name="hearto" size={24} color="black" />}
-                    subtitle={
-                        queryIndex === 0 ? null : <Text
-                            style={styles.bold}
-                            onPress={() => navigation.navigate(
-                                'MyModal', { name: authorName })
-                            }>{authorName}</Text>
+                        name={item.isFavorite ? 'heart' : "hearto"} size={24} color="black" />}
+                    subtitle={<Text
+                        style={styles.bold}
+                        onPress={() => navigation.navigate(
+                            'MyModal', { name: authorName })
+                        }>{authorName}</Text>
                     }
                     bottomDivider
                 />

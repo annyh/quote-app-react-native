@@ -9,7 +9,7 @@ import AuthorScreen from '../screens/AuthorScreen';
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
 
-export default function BottomTabNavigator({ navigation, route, allData, bool, needsRenderAgain, showToast, onAdd }) {
+export default function BottomTabNavigator({ navigation, route, allData, onAdd, onDelete, deleteData }) {
     // Set the header title on the parent stack navigator depending on the
     // currently active tab. Learn more in the documentation:
     // https://reactnavigation.org/docs/en/screen-options-resolution.html
@@ -19,16 +19,16 @@ export default function BottomTabNavigator({ navigation, route, allData, bool, n
         <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
             <BottomTab.Screen
                 name="Home">
-                {props => <HomeScreen {...props} onAdd={onAdd}/>}
+                {props => <HomeScreen {...props} onAdd={onAdd} allData={allData} onDelete={onDelete} />}
             </BottomTab.Screen>
             <BottomTab.Screen
                 name="Links">
-                {props => <LinksScreen {...props} allData={allData} bool={bool} needsRenderAgain={needsRenderAgain} showToast={showToast} onAdd={onAdd}/>}
-                    </BottomTab.Screen>
+                {props => <LinksScreen {...props} allData={allData} onDelete={onDelete} />}
+            </BottomTab.Screen>
             <BottomTab.Screen
                 name="Authors">
-                {props => <AuthorScreen {...props} allData={allData} bool={bool} needsRenderAgain={needsRenderAgain} showToast={showToast} onAdd={onAdd}/>}
-                </BottomTab.Screen>
+                {props => <AuthorScreen {...props} allData={allData} deleteData={deleteData} />}
+            </BottomTab.Screen>
         </BottomTab.Navigator>
     );
 }

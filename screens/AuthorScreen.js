@@ -1,20 +1,10 @@
 import * as React from 'react';
 import { ListItem} from 'react-native-elements'
-import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import model from '../Model';
+import { Button, ScrollView, StyleSheet } from 'react-native';
 import { getTitleFromId } from '../utils';
 
-export default function AuthorScreen({ navigation, allData, bool, needsRenderAgain, showToast }) {
+export default function AuthorScreen({ navigation, allData, deleteData }) {
     const prefix = '@author/';
-    // id is optional. if no id provided, delete all data in this app
-    const deleteData = async (itemId) => {
-        const toDelete = itemId || prefix;
-        console.log('deleting', toDelete)
-        await model.deleteArchivedTodoList(toDelete);
-        needsRenderAgain(!bool);
-        const suffix = itemId ? 'author ' + itemId : 'all data';
-        showToast('Removed ' + suffix);
-    }
 
     return (<ScrollView style={styles.container}>
         <Button title='Delete all data' onPress={() => deleteData()} />

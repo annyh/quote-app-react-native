@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 
-export default function AuthorDetail({ _name, allData, onAdd }) {
+export default function AuthorDetail({ _name, allData, onAdd, deleteData }) {
     const [results, setResults] = useState([]);
     const name = _name || 'mark twain';
     let iconName = 'hearto'
@@ -30,9 +30,13 @@ export default function AuthorDetail({ _name, allData, onAdd }) {
         <View style={styles.textContainer}>
             <Text style={styles.title}>{name}</Text>
             <AntDesign
-                onPress={(() => {
-                    console.log('favorite this author', name);
-
+                onPress={(() => { 
+                    // if already favorite, delete author
+                    if (iconName === 'heart') {
+                        deleteData(name);
+                    } else {
+                        onAdd(name);
+                    }
                 })}
                 name={iconName}
                 size={32}

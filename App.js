@@ -14,9 +14,9 @@ const showToast = (str) => {
     ToastAndroid.show(str, ToastAndroid.SHORT);
 };
 
-function ModalScreen({ route, allData, onAdd }) {
+function ModalScreen({ route, allData, onAdd, deleteData }) {
     return (
-        <AuthorDetail allData={allData || []} _name={route.params ? route.params.name : ''} onAdd={onAdd} />
+        <AuthorDetail allData={allData || []} _name={route.params ? route.params.name : ''} onAdd={onAdd} deleteData={deleteData} />
     );
 }
 
@@ -25,6 +25,43 @@ export default function App() {
     const [bool, needsRenderAgain] = useState(false);
     const prefix = '@author/';
 
+    // id is optional. if id provided delete the author
+    // else delete all data in this app
+    const deleteData = async (authorName) => {
+        const toDelete = authorName ? prefix + authorName : prefix;
+        console.log('deleting', toDelete)
+        await model.deleteArchivedTodoList(toDelete);
+        needsRenderAgain(!bool);
+        const suffix = authorName ? 'author ' + authorName : 'all data';
+        showToast('Removed ' + suffix);
+    }
+
+    const onDelete = async (authorName, quote) => {
+        // quote should belong to an author
+        const authors = allData.filter((obj) => obj.id.includes(authorName));
+        if (authors.length) {
+            // if there are remaining quotes, remove quote from existing author
+            // else if this is the only quote by the author, remove the author
+            const todoItem = authors[0];
+            todoItem.quotes = todoItem.quotes.filter((str) => str !== quote);
+            if (todoItem.quotes.length) {
+                todoItem.updated = Date.now();
+                // change results
+                console.log('setting', todoItem)
+                await model.createTodo(todoItem);
+            } else {
+                // remove author
+                await model.deleteArchivedTodoList(prefix + authorName);
+            }
+            needsRenderAgain(!bool);
+            showToast('Removed quote', quote.substr(0, 50) + ' ...');
+        } else {
+            showToast('Surprise, cannot find author', authorName);
+        }
+    };
+
+    // {String} authorName does not contain prefix
+    // {String} quote
     const onAdd = async (authorName, quote) => {
         // is the quote belong to a favorite author?
         const authors = allData.filter((obj) => obj.id.includes(authorName));
@@ -43,7 +80,7 @@ export default function App() {
             // quote author is new
             const todoItem = {
                 id: prefix + authorName,
-                quotes: [quote],
+                quotes: quote ? [quote] : [],
                 created: Date.now(),
             }
             // change results
@@ -51,9 +88,15 @@ export default function App() {
             await model.createTodo(todoItem);
             needsRenderAgain(!bool);
         }
-
-        showToast('Favorited quote: ' + quote.substr(0, 50) + ' ...');
+        let message = '';
+        if (quote) {
+            message = 'Favorited quote: ' + quote.substr(0, 50) + ' ...';
+        } else {
+            message = 'Favorited author: ' + authorName; 
+        }
+        showToast(message);
     };
+    
     useEffect(() => {
         async function fetchData() {
             await model.readTodoList(prefix).then((list) => {
@@ -61,7 +104,7 @@ export default function App() {
                     return a.created < b.created;
                 });
                 setData(sortedList);
-                console.log('data is', sortedList)
+                // console.log('data is', sortedList)
             });
         }
         fetchData();
@@ -77,10 +120,10 @@ export default function App() {
                 <NavigationContainer>
                     <Stack.Navigator>
                         <Stack.Screen name="Tabs">
-                            {props => <BottomTabNavigator {...props} allData={allData} bool={bool} needsRenderAgain={needsRenderAgain} showToast={showToast} onAdd={onAdd} />}
+                            {props => <BottomTabNavigator {...props} allData={allData} deleteData={deleteData} onAdd={onAdd} onDelete={onDelete} />}
                         </Stack.Screen>
                         <Stack.Screen name="MyModal">
-                            {props => <ModalScreen {...props} allData={allData} onAdd={onAdd} />}
+                            {props => <ModalScreen {...props} allData={allData} onAdd={onAdd} deleteData={deleteData} />}
                         </Stack.Screen>
                     </Stack.Navigator>
                 </NavigationContainer>
