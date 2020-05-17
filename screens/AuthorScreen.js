@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import GridGallery from '../components/GridGallery';
 import model from '../Model';
-import {getTitleFromId} from '../utils';
+import { getTitleFromId } from '../utils';
 
 export default function AuthorScreen({ navigation, allData, bool, needsRenderAgain, showToast }) {
     const prefix = '@author/';
@@ -16,23 +16,25 @@ export default function AuthorScreen({ navigation, allData, bool, needsRenderAga
         await model.deleteArchivedTodoList(toDelete);
         needsRenderAgain(!bool);
         const suffix = itemId ? 'author ' + itemId : 'all data';
-        showToast('Removed '+ suffix );
+        showToast('Removed ' + suffix);
     }
-    
+
     return (<ScrollView style={styles.container}>
         <Button title='Delete all data' onPress={() => deleteData()} />
-        {allData && allData.map((item, i) => (
-            <ListItem
-                key={i}
-                title={getTitleFromId(item.id, prefix)}
-                rightIcon={<AntDesign
-                    onPress={() => deleteData(item.id)}
-                    name="heart" 
-                    size={24} 
-                    color="black" />}
-                bottomDivider
-            />
-        ))
+        {allData && allData.map((item, i) => {
+            const authorName = getTitleFromId(item.id, prefix);
+            return (
+                <ListItem
+                    key={i}
+                    title={getTitleFromId(item.id, prefix)}
+                    onPress={() => navigation.navigate(
+                        'MyModal', { name: authorName })
+                    }
+                    bottomDivider
+                    chevron
+                />
+            )
+        })
         }
         {/* <GridGallery /> */}
     </ScrollView>
