@@ -23,7 +23,6 @@ export default function HomeScreen({ navigation, allData, bool, needsRenderAgain
     const onAdd = async (authorName, quote) => {
         // is the quote belong to a favorite author?
         const authors = allData.filter((obj) => obj.id.includes(authorName));
-        console.log('authorName', authorName)
         if (authors.length) {
             // add new quote to existing author
             if (!authors[0].quotes.includes(quote)) {
@@ -47,8 +46,8 @@ export default function HomeScreen({ navigation, allData, bool, needsRenderAgain
             await model.createTodo(todoItem);
             needsRenderAgain(!bool);
         }
-        
-        showToast('Favorited quote: '+ quote.substr(0, 50) + ' ...');
+
+        showToast('Favorited quote: ' + quote.substr(0, 50) + ' ...');
     };
 
     return (<ScrollView style={styles.container}>

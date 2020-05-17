@@ -48,7 +48,12 @@ export default function LinksScreen({ navigation, allData, bool, needsRenderAgai
                             name="heart"
                             size={24}
                             color="black" />}
-                        subtitle={authorName}
+                            subtitle={<Text
+                                    style={styles.bold}
+                                    onPress={() => navigation.navigate(
+                                        'MyModal', { name: authorName })
+                                    }>{authorName}</Text>
+                            }
                         bottomDivider
                     />
                 ))
@@ -69,5 +74,9 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         paddingTop: 15,
-    }
+    },
+    bold: {
+        fontWeight: '400',
+        color: 'blue'
+    },    
 });

@@ -8,6 +8,7 @@ import * as WebBrowser from 'expo-web-browser';
 export default function AuthorDetail({ _name, allData }) {
     const [results, setResults] = useState([]);
     const name = _name || 'mark twain';
+    let iconName = 'hearto'
     async function getUserAsync(query) {
         let response = await fetch(query);
         let data = await response.json()
@@ -20,18 +21,22 @@ export default function AuthorDetail({ _name, allData }) {
         getUserAsync(getQuery())
             .then(data => setResults(data))
     }, [name]);
-    
-    console.log('in Author detail', allData.length);
+
+    const authors = allData.filter((obj) => obj.id.includes(name));
+    if (authors.length) {
+        iconName = 'heart';
+    }    
     return (<ScrollView style={styles.container}>
         <View style={styles.textContainer}>
             <Text style={styles.title}>{name}</Text>
             <AntDesign
-                    onPress={(() => {
-                        console.log('favorite this author', name)
-                    })}
-                    name="hearto"
-                    size={32}
-                    color="black" />
+                onPress={(() => {
+                    console.log('favorite this author', name);
+
+                })}
+                name={iconName}
+                size={32}
+                color="black" />
         </View>
         <Button title="Open in Wikipedia" onPress={async () => {
             const url = 'https://en.wikipedia.org/wiki/' + name.trim().split(' ').join('_')
