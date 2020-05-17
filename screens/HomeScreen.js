@@ -3,6 +3,7 @@ import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
+import { processResults } from '../utils';
 import values from '../data/values.json';
 
 export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
@@ -18,24 +19,15 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
     const getQuery = () => {
         return 'https://goodquotesapi.herokuapp.com/' + queryBy[queryIndex] + '/' + text.split(' ').join('+')
     }
-    const processResults = (obj) => {
-        if (!obj.hasOwnProperty('quotes')) {
-            return;
-        }
 
-        // get all quotes
-        const favoriteQuotes = allData.reduce((acc, curr) => {
-            acc = [...acc, ...curr.quotes]; return acc;
-        }, []);
-        obj.quotes.forEach((obj) => {
-            obj.isFavorite = favoriteQuotes.includes(obj.quote);
-        });
-        return obj;
+    const getQuotes = () => {
+        getUserAsync(getQuery(text))
+            .then(data => setResults(processResults(data, allData)));
     }
 
     useEffect(() => {
         if (results && results.hasOwnProperty('quotes')) {
-            const obj = processResults(results);
+            const obj = processResults(results, allData);
             setResults(obj);
         }
     }, [allData]);
@@ -63,8 +55,7 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
             onChangeText={text => setText(text)}
             defaultValue={text}
             autoFocus={true}
-            onSubmitEditing={() => getUserAsync(getQuery(text))
-                .then(data => setResults(processResults(data)))}
+            onSubmitEditing={() => getQuotes()}
         />
         <Button
             icon={
@@ -74,8 +65,7 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
                     color="white"
                 />
             }
-            onPress={() => getUserAsync(getQuery(text))
-                .then(data => setResults(processResults(data)))}
+            onPress={() => getQuotes()}
         />
         {results && results.hasOwnProperty('quotes') && results.quotes.map((item, i) => {
             let authorName = item.author.trim();
