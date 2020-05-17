@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { ButtonGroup, ListItem } from 'react-native-elements'
-import { ScrollView, StyleSheet, Text, TextInput } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
+import values from '../data/values.json';
 
 export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
     const [text, setText] = useState('');
@@ -50,6 +51,12 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
             selectedIndex={queryIndex}
             buttons={queryBy}
         />
+        {queryIndex === 1 && <Button
+            title='Get random tag'
+            onPress={() => {
+                const rand = Math.floor(Math.random() * 100);
+                setText(values[rand]);
+            }} />}
         <TextInput
             style={styles.input}
             placeholder={"Find quotes by " + queryBy[queryIndex]}
