@@ -118,12 +118,8 @@ export default function App() {
         return (
             <View style={styles.container}>
                 <NavigationContainer>
-                    <Stack.Navigator>
-                        <Stack.Screen name="Tabs"
-                            options={({ route }) => ({
-                                headerTitle: getHeaderTitle(route),
-                            })}
-                        >
+                    <Stack.Navigator headerMode='float'> 
+                        <Stack.Screen name="Quotes app">
                             {props => <BottomTabNavigator {...props} allData={allData} deleteData={deleteData} onAdd={onAdd} onDelete={onDelete} />}
                         </Stack.Screen>
                         <Stack.Screen name="MyModal">
@@ -133,20 +129,6 @@ export default function App() {
                 </NavigationContainer>
             </View>
         );
-    }
-}
-
-function getHeaderTitle(route) {
-    const INITIAL_ROUTE_NAME = 'Home';
-    const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
-
-    switch (routeName) {
-        case 'Home':
-            return 'Find quotes by author or tag or book';
-        case 'Links':
-            return 'Favorite quotes';
-        case 'Authors':
-            return 'Favorite authors';
     }
 }
 

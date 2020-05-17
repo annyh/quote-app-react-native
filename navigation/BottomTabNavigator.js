@@ -23,7 +23,7 @@ export default function BottomTabNavigator({ navigation, route, allData, onAdd, 
             <BottomTab.Screen
                 name="Favorite Quotes"
                 options={{
-                    tabBarIcon: ({ focused }) => <TabBarIcon name="heart"  focused={focused} />
+                    tabBarIcon: ({ focused }) => <TabBarIcon name="heart" focused={focused} />
                 }}
             >
                 {props => <LinksScreen {...props} allData={allData} onDelete={onDelete} />}
@@ -31,7 +31,7 @@ export default function BottomTabNavigator({ navigation, route, allData, onAdd, 
             <BottomTab.Screen
                 name="Favorite Authors"
                 options={{
-                    tabBarIcon: ({ focused }) => <TabBarIcon name="user"  focused={focused} />
+                    tabBarIcon: ({ focused }) => <TabBarIcon name="user" focused={focused} />
                 }}
             >
                 {props => <AuthorScreen {...props} allData={allData} deleteData={deleteData} />}

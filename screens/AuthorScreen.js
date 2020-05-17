@@ -27,10 +27,6 @@ export default function AuthorScreen({ navigation, allData, deleteData }) {
     );
 }
 
-AuthorScreen.navigationOptions = {
-    header: null,
-};
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

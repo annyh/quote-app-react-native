@@ -40,11 +40,6 @@ export default function LinksScreen({ navigation, allData, onDelete }) {
     );
 }
 
-LinksScreen.navigationOptions = {
-    title: 'Favorites',
-    tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="heart" />,
-};
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

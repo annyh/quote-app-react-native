@@ -104,10 +104,6 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
     );
 }
 
-HomeScreen.navigationOptions = {
-    title: 'Search quotes',
-    tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="search1" />,
-};
 
 const styles = StyleSheet.create({
     container: {
