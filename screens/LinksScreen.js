@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import model from '../Model';
+import {getTitleFromId} from '../utils';
 
 export default function LinksScreen() {
     const [allData, setData] = useState([]);
@@ -17,7 +18,8 @@ export default function LinksScreen() {
             setData(sortedList);
             console.log('data is', sortedList)
         });
-    }, [])    
+    }, []);
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         {allData && allData.map((item, i) => {
@@ -26,7 +28,7 @@ export default function LinksScreen() {
                     key={i}
                     title={quote}
                     rightIcon={<AntDesign name="heart" size={24} color="black" />}
-                    subtitle={item.id}
+                    subtitle={getTitleFromId(item.id, prefix)}
                     bottomDivider
                 />
             ))})

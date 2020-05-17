@@ -33,14 +33,17 @@ export default function HomeScreen({ navigation }) {
     const onTodoAdd = async (authorName, quote) => {
         // is the quote belong to a favorite author?
         const authors = allData.filter((obj) => obj.id.includes(authorName));
+        console.log('authorName', authorName)
         if (authors.length) {
-            console.log('quote belongs to existing author');
-            const todoItem = authors[0];
-            authors[0].quotes = [...authors[0].quotes, quote]
-            todoItem.updated = Date.now();
-            // change results
-            console.log('adding', todoItem)
-            model.createTodo(todoItem);
+            // add new quote to existing author
+            if (!authors[0].quotes.includes(quote)) {
+                const todoItem = authors[0];
+                authors[0].quotes = [...authors[0].quotes, quote]
+                todoItem.updated = Date.now();
+                // change results
+                console.log('adding', todoItem)
+                model.createTodo(todoItem);
+            }
         } else {
             console.log('quote author is new');
             const todoItem = {
@@ -50,7 +53,7 @@ export default function HomeScreen({ navigation }) {
             }
             // change results
             console.log('adding', todoItem)
-            model.createTodo(todoItem);            
+            model.createTodo(todoItem);
         }
     };
 

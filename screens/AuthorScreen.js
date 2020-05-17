@@ -1,14 +1,47 @@
 import * as React from 'react';
 import { ButtonGroup, ListItem, withTheme } from 'react-native-elements'
-import { FlatList, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import GridGallery from '../components/GridGallery';
+import model from '../Model';
+import {getTitleFromId} from '../utils';
 
 export default function AuthorScreen({ navigation }) {
+    const [allData, setData] = useState([]);
+    const prefix = '@author/'
+    useEffect(() => {
+        model.readTodoList(prefix).then((list) => {
+            const sortedList = list.sort((a, b) => {
+                return a.created < b.created;
+            });
+            setData(sortedList);
+            console.log('data is', sortedList)
+        });
+    }, []);
+
+    const deleteData = async (id) => {
+        console.log('in deleteData, id', id)
+        // await model.deleteArchivedTodoList(prefix);
+    }
+    
     return (<ScrollView style={styles.container}>
-        <GridGallery />
-        </ScrollView>
+        <Button title='Delete all data' onPress={() => deleteData()} />
+        {allData && allData.map((item, i) => (
+            <ListItem
+                key={i}
+                title={getTitleFromId(item.id, prefix)}
+                rightIcon={<AntDesign
+                    onPress={() => deleteData(item.id)}
+                    name="heart" 
+                    size={24} 
+                    color="black" />}
+                bottomDivider
+            />
+        ))
+        }
+        {/* <GridGallery /> */}
+    </ScrollView>
     );
 }
 
