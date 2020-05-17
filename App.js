@@ -11,9 +11,9 @@ import model from './Model';
 
 const Stack = createStackNavigator();
 
-function ModalScreen({ navigation, route, extraData }) {
+function ModalScreen({ navigation, route, allData }) {
     return (
-        <AuthorDetail allData={extraData || []}_name={route.params ? route.params.name : ''} />
+        <AuthorDetail allData={allData || []} _name={route.params ? route.params.name : ''} />
     );
 }
 
@@ -39,11 +39,12 @@ export default function App() {
             <View style={styles.container}>
                 <NavigationContainer>
                     <Stack.Navigator>
-                        <Stack.Screen name="Tabs" component={BottomTabNavigator} />
-                        <Stack.Screen name="MyModal">
-                            {props => <ModalScreen {...props} extraData={allData} />}
+                        <Stack.Screen name="Tabs">
+                            {props => <BottomTabNavigator {...props} allData={allData} />}
                         </Stack.Screen>
-                        {/* </Stack.Screen> component={ModalScreen} /> */}
+                        <Stack.Screen name="MyModal">
+                            {props => <ModalScreen {...props} allData={allData} />}
+                        </Stack.Screen>
                     </Stack.Navigator>
                 </NavigationContainer>
             </View>

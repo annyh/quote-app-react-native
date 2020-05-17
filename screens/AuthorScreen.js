@@ -7,18 +7,8 @@ import GridGallery from '../components/GridGallery';
 import model from '../Model';
 import {getTitleFromId} from '../utils';
 
-export default function AuthorScreen({ navigation }) {
-    const [allData, setData] = useState([]);
-    const prefix = '@author/'
-    useEffect(() => {
-        model.readTodoList(prefix).then((list) => {
-            const sortedList = list.sort((a, b) => {
-                return a.created < b.created;
-            });
-            setData(sortedList);
-            console.log('data is', sortedList)
-        });
-    }, []);
+export default function AuthorScreen({ navigation, allData }) {
+    const prefix = '@author/';
 
     const deleteData = async (id) => {
         console.log('in deleteData, id', id)

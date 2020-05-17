@@ -7,19 +7,8 @@ import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import model from '../Model';
 import {getTitleFromId} from '../utils';
 
-export default function LinksScreen() {
-    const [allData, setData] = useState([]);
+export default function LinksScreen({navigation, allData}) {
     const prefix = '@author/'
-    useEffect(() => {
-        model.readTodoList(prefix).then((list) => {
-            const sortedList = list.sort((a, b) => {
-                return a.created < b.created;
-            });
-            setData(sortedList);
-            console.log('data is', sortedList)
-        });
-    }, []);
-
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         {allData && allData.map((item, i) => {
@@ -35,6 +24,11 @@ export default function LinksScreen() {
         }</ScrollView>
   );
 }
+
+LinksScreen.navigationOptions = {
+    title: 'Favorites',
+    tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="heart" />,
+};
 
 const styles = StyleSheet.create({
   container: {
