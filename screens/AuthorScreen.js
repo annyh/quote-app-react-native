@@ -15,7 +15,7 @@ export default function AuthorScreen({ navigation, allData, deleteData }) {
                     key={i}
                     title={getTitleFromId(item.id, prefix)}
                     onPress={() => navigation.navigate(
-                        'MyModal', { name: authorName })
+                        'Author Detail', { name: authorName })
                     }
                     bottomDivider
                     chevron

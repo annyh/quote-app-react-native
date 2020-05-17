@@ -122,7 +122,7 @@ export default function App() {
                         <Stack.Screen name="Quotes app">
                             {props => <BottomTabNavigator {...props} allData={allData} deleteData={deleteData} onAdd={onAdd} onDelete={onDelete} />}
                         </Stack.Screen>
-                        <Stack.Screen name="MyModal">
+                        <Stack.Screen name="Author Detail">
                             {props => <ModalScreen {...props} allData={allData} onAdd={onAdd} deleteData={deleteData} />}
                         </Stack.Screen>
                     </Stack.Navigator>

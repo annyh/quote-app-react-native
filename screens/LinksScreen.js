@@ -29,7 +29,7 @@ export default function LinksScreen({ navigation, allData, onDelete }) {
                             subtitle={<Text
                                     style={styles.bold}
                                     onPress={() => navigation.navigate(
-                                        'MyModal', { name: authorName })
+                                        'Author Detail', { name: authorName })
                                     }>{authorName}</Text>
                             }
                         bottomDivider
