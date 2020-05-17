@@ -7,7 +7,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { processResults } from '../utils';
 import FaveIcon from './FaveIcon';
 
-export default function AuthorDetail({ _name, allData, onAdd, deleteData }) {
+export default function AuthorDetail({ _name, allData, onAdd, deleteData, onDelete }) {
     const [results, setResults] = useState([]);
     const name = _name || 'mark twain';
     let iconName = 'hearto'
@@ -56,7 +56,7 @@ export default function AuthorDetail({ _name, allData, onAdd, deleteData }) {
             <ListItem
                 key={i}
                 title={item.quote}
-                rightIcon={<FaveIcon item={item} name={name} index={i} results={results} setResults={setResults} onAdd={onAdd} />}
+                rightIcon={<FaveIcon item={item} name={name} index={i} results={results} setResults={setResults} onAdd={onAdd} onDelete={onDelete} />}
                 subtitle={item.publication}
                 bottomDivider
             />

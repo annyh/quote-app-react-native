@@ -87,6 +87,7 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
                         results={results}
                         setResults={setResults}
                         onAdd={onAdd}
+                        onDelete={onDelete}
                     />}
                     subtitle={<Text
                         style={styles.bold}

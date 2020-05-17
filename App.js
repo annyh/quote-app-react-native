@@ -14,9 +14,13 @@ const showToast = (str) => {
     ToastAndroid.show(str, ToastAndroid.SHORT);
 };
 
-function ModalScreen({ route, allData, onAdd, deleteData }) {
+function ModalScreen({ route, allData, onAdd, deleteData, onDelete }) {
     return (
-        <AuthorDetail allData={allData || []} _name={route.params ? route.params.name : ''} onAdd={onAdd} deleteData={deleteData} />
+        <AuthorDetail
+            allData={allData || []}
+            _name={route.params ? route.params.name : ''}
+            onAdd={onAdd} deleteData={deleteData}
+            onDelete={onDelete} />
     );
 }
 
@@ -118,12 +122,12 @@ export default function App() {
         return (
             <View style={styles.container}>
                 <NavigationContainer>
-                    <Stack.Navigator headerMode='float'> 
+                    <Stack.Navigator headerMode='float'>
                         <Stack.Screen name="Quotes app">
                             {props => <BottomTabNavigator {...props} allData={allData} deleteData={deleteData} onAdd={onAdd} onDelete={onDelete} />}
                         </Stack.Screen>
                         <Stack.Screen name="Author Detail">
-                            {props => <ModalScreen {...props} allData={allData} onAdd={onAdd} deleteData={deleteData} />}
+                            {props => <ModalScreen {...props} allData={allData} onAdd={onAdd} deleteData={deleteData} onDelete={onDelete} />}
                         </Stack.Screen>
                     </Stack.Navigator>
                 </NavigationContainer>

@@ -5,7 +5,8 @@ import { getAuthorFromId } from '../utils';
 
 export default function AuthorScreen({ navigation, allData, deleteData }) {
     return (<ScrollView style={styles.container}>
-        <Button title='Delete all data' onPress={() => deleteData()} />
+        {/* TODO: move the button to a settings page */}
+        {/* <Button title='Delete all data' onPress={() => deleteData()} /> */}
         {allData && allData.map((item, i) => {
             const authorName = getAuthorFromId(item.id);
             return (
