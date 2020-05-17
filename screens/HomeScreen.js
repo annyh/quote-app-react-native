@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useEffect, useState } from 'react'
-import { AntDesign } from '@expo/vector-icons';
-import { processResults } from '../utils';
+import { AntDesign, createIconSetFromIcoMoon } from '@expo/vector-icons';
+import { processResults, getAuthorFromId } from '../utils';
 import values from '../data/values.json';
 
 export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
@@ -86,6 +86,9 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
                                 onDelete(authorName, item.quote)
                             } else {
                                 console.log('favorite this quote', item.quote, 'by', authorName)
+                                // find the item in result, change result
+                                results.quotes[i].isFavorite = true;
+                                setResults({...results});                                
                                 onAdd(authorName, item.quote);
                             }
                         })}

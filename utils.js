@@ -1,4 +1,4 @@
-const getTitleFromId = (id, prefix) => id.substring(id.indexOf('/') + 1, id.length);
+const getAuthorFromId = (id) => id.substring(id.indexOf('/') + 1, id.length);
 
 const processResults = (obj, allData) => {
     if (!obj.hasOwnProperty('quotes') || !allData) {
@@ -15,4 +15,4 @@ const processResults = (obj, allData) => {
     return obj;
 }
 
-export { getTitleFromId, processResults };
+export { getAuthorFromId, processResults };

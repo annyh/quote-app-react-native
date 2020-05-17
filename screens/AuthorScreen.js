@@ -1,19 +1,17 @@
 import * as React from 'react';
 import { ListItem} from 'react-native-elements'
 import { Button, ScrollView, StyleSheet } from 'react-native';
-import { getTitleFromId } from '../utils';
+import { getAuthorFromId } from '../utils';
 
 export default function AuthorScreen({ navigation, allData, deleteData }) {
-    const prefix = '@author/';
-
     return (<ScrollView style={styles.container}>
         <Button title='Delete all data' onPress={() => deleteData()} />
         {allData && allData.map((item, i) => {
-            const authorName = getTitleFromId(item.id, prefix);
+            const authorName = getAuthorFromId(item.id);
             return (
                 <ListItem
                     key={i}
-                    title={getTitleFromId(item.id, prefix)}
+                    title={getAuthorFromId(item.id)}
                     onPress={() => navigation.navigate(
                         'Author Detail', { name: authorName })
                     }

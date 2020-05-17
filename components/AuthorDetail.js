@@ -51,7 +51,7 @@ export default function AuthorDetail({ _name, allData, onAdd, deleteData }) {
             const url = 'https://en.wikipedia.org/wiki/' + name.trim().split(' ').join('_')
             await WebBrowser.openBrowserAsync(url)
         }} />
-        {results.hasOwnProperty('quotes') && results.quotes.map((item, i) => (
+        {results && results.hasOwnProperty('quotes') && results.quotes.map((item, i) => (
             <ListItem
                 key={i}
                 title={item.quote}

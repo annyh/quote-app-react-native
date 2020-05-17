@@ -1,10 +1,7 @@
 TODO
 - update readme with running instructions 
 - add a settings icon, onclick shows modal, modal has button to delete all data
-- remove re-get all data onAdd 
-
-knonwn bugs
-- on home page, when favorite a quote, it doesn't update to favorited right away
+- render something when no results are returned
 
 refactor
 - use one favorites icon for HomeScreen and AuthorDetail

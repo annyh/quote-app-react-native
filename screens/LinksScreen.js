@@ -1,19 +1,15 @@
 import { AntDesign } from '@expo/vector-icons';
 import { ListItem } from 'react-native-elements'
 import * as React from 'react';
-import { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native';
-import { RectButton, ScrollView } from 'react-native-gesture-handler';
-import model from '../Model';
-import { getTitleFromId } from '../utils';
+import { StyleSheet, Text } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { getAuthorFromId } from '../utils';
 
 export default function LinksScreen({ navigation, allData, onDelete }) {
-    const prefix = '@author/';
-
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
             {allData && allData.map((item, i) => {
-                const authorName = getTitleFromId(item.id, prefix);
+                const authorName = getAuthorFromId(item.id);
                 return item.quotes.map((quote) => (
                     <ListItem
                         key={quote}
