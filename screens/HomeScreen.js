@@ -9,8 +9,8 @@ import { Dimensions } from "react-native";
 
 export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
     const [text, setText] = useState('');
-    const queryBy = ['author', 'tag', 'title'];
-    const [queryIndex, setQueryIndex] = useState(1);
+    const queryBy = ['tag', 'author', 'title'];
+    const [queryIndex, setQueryIndex] = useState(0);
     const [results, setResults] = useState([]);
     async function getUserAsync(query) {
         let response = await fetch(query);
@@ -47,6 +47,7 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
         />
         <View style={{ flex: 1, flexDirection: "row", justifyContent: 'space-between' }}>
             {queryBy[queryIndex] === 'tag' && <Button
+                containerStyle={{ width: 140 }}
                 title='Get random tag'
                 onPress={() => {
                     const rand = Math.floor(Math.random() * 100);
@@ -78,7 +79,7 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
             return (
                 <ListItem
                     key={i}
-                    title={item.quote + ' ' + item.isFavorite}
+                    title={item.quote}
                     rightIcon={<AntDesign
                         onPress={(() => {
                             if (item.isFavorite) {

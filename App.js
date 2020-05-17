@@ -92,11 +92,11 @@ export default function App() {
         if (quote) {
             message = 'Favorited quote: ' + quote.substr(0, 50) + ' ...';
         } else {
-            message = 'Favorited author: ' + authorName; 
+            message = 'Favorited author: ' + authorName;
         }
         showToast(message);
     };
-    
+
     useEffect(() => {
         async function fetchData() {
             await model.readTodoList(prefix).then((list) => {
@@ -119,7 +119,11 @@ export default function App() {
             <View style={styles.container}>
                 <NavigationContainer>
                     <Stack.Navigator>
-                        <Stack.Screen name="Tabs">
+                        <Stack.Screen name="Tabs"
+                            options={({ route }) => ({
+                                headerTitle: getHeaderTitle(route),
+                            })}
+                        >
                             {props => <BottomTabNavigator {...props} allData={allData} deleteData={deleteData} onAdd={onAdd} onDelete={onDelete} />}
                         </Stack.Screen>
                         <Stack.Screen name="MyModal">
@@ -129,6 +133,20 @@ export default function App() {
                 </NavigationContainer>
             </View>
         );
+    }
+}
+
+function getHeaderTitle(route) {
+    const INITIAL_ROUTE_NAME = 'Home';
+    const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
+
+    switch (routeName) {
+        case 'Home':
+            return 'Find quotes by author or tag or book';
+        case 'Links':
+            return 'Favorite quotes';
+        case 'Authors':
+            return 'Favorite authors';
     }
 }
 

@@ -1,3 +1,7 @@
+TODO
+- update readme with running instructions 
+- add border radius to the search button and random tab button
+
 knonwn bugs
 - on home page, when favorite a quote, it doesn't update to favorited right away
 
