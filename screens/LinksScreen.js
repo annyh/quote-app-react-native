@@ -7,7 +7,7 @@ import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import model from '../Model';
 import { getTitleFromId } from '../utils';
 
-export default function LinksScreen({ navigation, allData, bool, needsRenderAgain }) {
+export default function LinksScreen({ navigation, allData, bool, needsRenderAgain, showToast }) {
     const prefix = '@author/';
     const onDelete = async (authorName, quote, id) => {
         // quote should belong to an author
@@ -27,8 +27,9 @@ export default function LinksScreen({ navigation, allData, bool, needsRenderAgai
                 await model.deleteArchivedTodoList(id);
             }
             needsRenderAgain(!bool);
+            showToast('Removed quote', quote.substr(0, 50) + ' ...');
         } else {
-            console.log('Surprise, cannot find author', authorName);
+            showToast('Surprise, cannot find author', authorName);
         }
     };
     return (
@@ -41,8 +42,8 @@ export default function LinksScreen({ navigation, allData, bool, needsRenderAgai
                         title={quote}
                         rightIcon={<AntDesign
                             onPress={(() => {
-                                console.log('remove this quote', item.quote, 'by', authorName)
-                                onDelete(authorName, quote, id);
+                                console.log('remove this quote', quote, 'by', authorName)
+                                onDelete(authorName, quote, item.id);
                             })}
                             name="heart"
                             size={24}

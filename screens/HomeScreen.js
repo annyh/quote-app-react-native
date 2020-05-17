@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import model from '../Model';
 
-export default function HomeScreen({ navigation, allData, bool, needsRenderAgain }) {
+export default function HomeScreen({ navigation, allData, bool, needsRenderAgain, showToast }) {
     const [text, setText] = useState('');
     const queryBy = ['author', 'tag', 'title'];
     const [queryIndex, setQueryIndex] = useState(0);
@@ -36,7 +36,7 @@ export default function HomeScreen({ navigation, allData, bool, needsRenderAgain
                 needsRenderAgain(!bool);
             }
         } else {
-            console.log('quote author is new');
+            // quote author is new
             const todoItem = {
                 id: prefix + authorName,
                 quotes: [quote],
@@ -47,6 +47,8 @@ export default function HomeScreen({ navigation, allData, bool, needsRenderAgain
             await model.createTodo(todoItem);
             needsRenderAgain(!bool);
         }
+        
+        showToast('Favorited quote: '+ quote.substr(0, 50) + ' ...');
     };
 
     return (<ScrollView style={styles.container}>

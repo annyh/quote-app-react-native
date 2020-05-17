@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, ToastAndroid, View } from 'react-native';
 
 import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
@@ -10,8 +10,11 @@ import AuthorDetail from './components/AuthorDetail'
 import model from './Model';
 
 const Stack = createStackNavigator();
+const showToast = (str) => {
+    ToastAndroid.show(str, ToastAndroid.SHORT);
+};
 
-function ModalScreen({ navigation, route, allData }) {
+function ModalScreen({ navigation, route, allData, bool, needsRenderAgain, showToast }) {
     return (
         <AuthorDetail allData={allData || []} _name={route.params ? route.params.name : ''} />
     );
@@ -23,14 +26,18 @@ export default function App() {
     const prefix = '@author/'
 
     useEffect(() => {
-        model.readTodoList(prefix).then((list) => {
-            const sortedList = list.sort((a, b) => {
-                return a.created < b.created;
+        async function fetchData() {
+            await model.readTodoList(prefix).then((list) => {
+                const sortedList = list.sort((a, b) => {
+                    return a.created < b.created;
+                });
+                setData(sortedList);
+                console.log('data is', sortedList)
             });
-            setData(sortedList);
-            console.log('data is', sortedList)
-        });
+        }
+        fetchData();
     }, [bool])
+
     const isLoadingComplete = useCachedResources();
 
     if (!isLoadingComplete) {
@@ -41,10 +48,10 @@ export default function App() {
                 <NavigationContainer>
                     <Stack.Navigator>
                         <Stack.Screen name="Tabs">
-                            {props => <BottomTabNavigator {...props} allData={allData} bool={bool} needsRenderAgain={needsRenderAgain} />}
+                            {props => <BottomTabNavigator {...props} allData={allData} bool={bool} needsRenderAgain={needsRenderAgain} showToast={showToast} />}
                         </Stack.Screen>
                         <Stack.Screen name="MyModal">
-                            {props => <ModalScreen {...props} allData={allData} />}
+                            {props => <ModalScreen {...props} bool={bool} needsRenderAgain={needsRenderAgain} allData={allData} showToast={showToast} />}
                         </Stack.Screen>
                     </Stack.Navigator>
                 </NavigationContainer>

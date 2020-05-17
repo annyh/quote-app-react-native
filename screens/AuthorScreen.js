@@ -7,14 +7,16 @@ import GridGallery from '../components/GridGallery';
 import model from '../Model';
 import {getTitleFromId} from '../utils';
 
-export default function AuthorScreen({ navigation, allData, bool, needsRenderAgain }) {
+export default function AuthorScreen({ navigation, allData, bool, needsRenderAgain, showToast }) {
     const prefix = '@author/';
-
     // id is optional. if no id provided, delete all data in this app
-    const deleteData = async (id) => {
-        console.log('in deleteData, id', id)
-        await model.deleteArchivedTodoList(id || prefix);
+    const deleteData = async (itemId) => {
+        const toDelete = itemId || prefix;
+        console.log('deleting', toDelete)
+        await model.deleteArchivedTodoList(toDelete);
         needsRenderAgain(!bool);
+        const suffix = itemId ? 'author ' + itemId : 'all data';
+        showToast('Removed '+ suffix );
     }
     
     return (<ScrollView style={styles.container}>
