@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { ButtonGroup, ListItem, withTheme } from 'react-native-elements'
+import { ListItem} from 'react-native-elements'
 import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useEffect, useState } from 'react'
-import { AntDesign } from '@expo/vector-icons';
-import GridGallery from '../components/GridGallery';
 import model from '../Model';
 import { getTitleFromId } from '../utils';
 
@@ -36,7 +33,6 @@ export default function AuthorScreen({ navigation, allData, bool, needsRenderAga
             )
         })
         }
-        {/* <GridGallery /> */}
     </ScrollView>
     );
 }

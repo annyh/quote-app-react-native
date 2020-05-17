@@ -4,7 +4,7 @@ import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View
 import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 
-export default function HomeScreen({ navigation, allData, bool, needsRenderAgain, showToast, onAdd }) {
+export default function HomeScreen({ navigation, onAdd }) {
     const [text, setText] = useState('');
     const queryBy = ['author', 'tag', 'title'];
     const [queryIndex, setQueryIndex] = useState(0);

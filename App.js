@@ -14,7 +14,7 @@ const showToast = (str) => {
     ToastAndroid.show(str, ToastAndroid.SHORT);
 };
 
-function ModalScreen({ navigation, route, allData, bool, needsRenderAgain, showToast, onAdd }) {
+function ModalScreen({ route, allData, onAdd }) {
     return (
         <AuthorDetail allData={allData || []} _name={route.params ? route.params.name : ''} onAdd={onAdd} />
     );
@@ -80,7 +80,7 @@ export default function App() {
                             {props => <BottomTabNavigator {...props} allData={allData} bool={bool} needsRenderAgain={needsRenderAgain} showToast={showToast} onAdd={onAdd} />}
                         </Stack.Screen>
                         <Stack.Screen name="MyModal">
-                            {props => <ModalScreen {...props} bool={bool} needsRenderAgain={needsRenderAgain} allData={allData} showToast={showToast} onAdd={onAdd} />}
+                            {props => <ModalScreen {...props} allData={allData} onAdd={onAdd} />}
                         </Stack.Screen>
                     </Stack.Navigator>
                 </NavigationContainer>

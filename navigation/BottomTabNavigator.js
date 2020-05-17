@@ -19,7 +19,7 @@ export default function BottomTabNavigator({ navigation, route, allData, bool, n
         <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
             <BottomTab.Screen
                 name="Home">
-                {props => <HomeScreen {...props} allData={allData} bool={bool} needsRenderAgain={needsRenderAgain} showToast={showToast} onAdd={onAdd}/>}
+                {props => <HomeScreen {...props} onAdd={onAdd}/>}
             </BottomTab.Screen>
             <BottomTab.Screen
                 name="Links">
