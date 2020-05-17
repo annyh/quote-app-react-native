@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { ButtonGroup, ListItem, withTheme } from 'react-native-elements'
-import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ButtonGroup, ListItem } from 'react-native-elements'
+import { ScrollView, StyleSheet, Text, TextInput } from 'react-native';
 import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 
@@ -9,7 +9,6 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
     const queryBy = ['author', 'tag', 'title'];
     const [queryIndex, setQueryIndex] = useState(0);
     const [results, setResults] = useState([]);
-    const prefix = '@author/'
     async function getUserAsync(query) {
         let response = await fetch(query);
         let data = await response.json()

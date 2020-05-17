@@ -1,6 +1,4 @@
 TODO
-- on author details page: show favorite quotes from them
-- put back the bottom tab icons 
 - add search icon button to input, onpress submit
 
 knonwn bugs
