@@ -30,7 +30,6 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
         obj.quotes.forEach((obj) => {
             obj.isFavorite = favoriteQuotes.includes(obj.quote);
         });
-        // console.log('obj', obj.quotes)
         return obj;
     }
 
@@ -64,7 +63,6 @@ export default function HomeScreen({ navigation, onAdd, allData, onDelete }) {
         {results && results.hasOwnProperty('quotes') && results.quotes.map((item, i) => {
             let authorName = item.author.trim();
             if (authorName.endsWith(',')) authorName = authorName.substr(0, authorName.length - 1);
-            if (item.isFavorite) console.log('favorite', item.quote)
             return (
                 <ListItem
                     key={i}

@@ -4,6 +4,7 @@ import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
+import { processResults } from '../utils';
 
 export default function AuthorDetail({ _name, allData, onAdd, deleteData }) {
     const [results, setResults] = useState([]);
@@ -18,9 +19,13 @@ export default function AuthorDetail({ _name, allData, onAdd, deleteData }) {
         return 'https://goodquotesapi.herokuapp.com/author/' + name.split(' ').join('+')
     }
     useEffect(() => {
+        // get favorite quotes
         getUserAsync(getQuery())
-            .then(data => setResults(data))
-    }, [name]);
+            .then(data => {
+                const res = processResults(data, allData);
+                setResults(res);
+            })
+    }, [allData, name]);
 
     const authors = allData.filter((obj) => obj.id.includes(name));
     if (authors.length) {
@@ -50,11 +55,17 @@ export default function AuthorDetail({ _name, allData, onAdd, deleteData }) {
             <ListItem
                 key={i}
                 title={item.quote}
-                onPress={(() => {
-                    console.log('favorite:', item.quote, 'by', name)
-                    onAdd(name, item.quote)
-                })}
-                rightIcon={<AntDesign name="hearto" size={24} color="black" />}
+                rightIcon={<AntDesign
+                    onPress={(() => {
+                        if (item.isFavorite) {
+                            // unfavorite
+                            onDelete(name, item.quote)
+                        } else {
+                            console.log('favorite this quote', item.quote, 'by', name)
+                            onAdd(name, item.quote);
+                        }
+                    })}
+                    name={item.isFavorite ? 'heart' : "hearto"} size={24} color="black" />}
                 subtitle={item.publication}
                 bottomDivider
             />
