@@ -1,6 +1,5 @@
 # Quotes App
-This app allows searching and saving of interesting quotes from interesting people.
-[Blog post](http://www.annyhe.com/quotes-app/) about **why** and the **how** of creating this app.
+This app allows searching and saving of interesting quotes from interesting people. The **why** and the **how** are explained in this [blog post](http://www.annyhe.com/quotes-app/).
 
 ### Video walkthrough 
 [![Quote app](http://img.youtube.com/vi/8e7yGb7OFbI/0.jpg)](http://www.youtube.com/watch?v=8e7yGb7OFbI "Quote app")
@@ -24,18 +23,18 @@ This app allows searching and saving of interesting quotes from interesting peop
 3. `npm start` will start expo and you can run in simulator or your device
 
 ## Contribution
-If you want to contribute on this project, you're welcome to fork the project and submit a pull request. 
+To contribute to this project please fork the project and submit a pull request. 
 
-## Questions or feedback?
+## Questions or feedback
 
 Feel free to open an issue, or find me [@annyhehe on Twitter](https://twitter.com/annyhehe).
 
-### TODO
+## TODO
 - add a settings icon, onclick shows modal, modal has button to delete all data
 - add export functionality to settings modal
 - render something when no results are returned
 - add unit tests
 
-### Data model assumption: 
+## Data model assumption: 
 - favorite authors can have quotes
 - favorite quotes belong to favorite authors. quotes cannot exist by themselves
